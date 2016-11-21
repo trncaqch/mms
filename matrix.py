@@ -1,11 +1,9 @@
 import pandas
 import numpy
+import math
 
-df = pandas.DataFrame
-#print df.empty
 
-photo_tags = pandas.read_csv('csv/photos_tags.csv', names = ["id", "tag"])
-#print photo_tags
+#this script builds the co-occurrence matrix
 
 
 #ordered list of tags
@@ -19,16 +17,17 @@ for i in tagsDf.tags:
 #creation of co-occurence matrix
 matrix = pandas.DataFrame(data = None, index = tagList, columns = tagList)
 
+
 #initialize values (NaN for the symmetrical axis)
 for i in tagList:
     matrix[i]=0
     matrix[i][i] = numpy.nan
 
 
-
-
 #count co_occurence
 idCount = 1
+
+photo_tags = pandas.read_csv('csv/photos_tags.csv', names = ["id", "tag"])
 
 while idCount<=24999:
     if photo_tags[photo_tags['id']==idCount].empty:
@@ -43,18 +42,6 @@ while idCount<=24999:
     idCount+=1
 
 
-for i in photo_tags[photo_tags['id']==5].tag:
-    print i
-
-print matrix
-
-
-matrix.to_csv('matrix.csv' , sep = ',' )
-
-
-
-
-
-
+matrix.to_csv('matrix.csv')
 
 
